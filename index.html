@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='styles/styles.css') }}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container card">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/2698/2698213.png"
+        alt="clouds"
+        class="clouds"
+      />
+      <h1>Weather App</h1>
+      {% if error %}
+      <div class="error">{{ error }}</div>
+      {% endif %} {% if success %}
+      <div class="success">{{ success }}</div>
+      {% endif %}
+      <form action="/weather" method="POST" class="form-group">
+        <input
+          type="text"
+          id="city"
+          name="city"
+          required
+          placeholder="Enter city name"
+        />
+        <button type="submit" class="btn btn1">Get Weather</button>
+      </form>
+      <form action="/voice_weather" method="POST" class="form-group">
+        <button type="submit" class="btn btn2">Get Weather by Voice</button>
+      </form>
+      <form action="/gps" method="GET">
+        <button type="submit" class="btn btn3">Use Current Location</button>
+      </form>
+      <div id="weather-info">
+        {% if city %}
+        <p>City : {{ city }}</p>
+        <p>Temperature : {{ temperature }}°C</p>
+        <p>Humidity : {{ humidity }}%</p>
+        <p>Min Temperature : {{ temp_min }}°C</p>
+        <p>Max Temperature : {{ temp_max }}°C</p>
+        {% endif %}
+      </div>
+      {% if audio_url %}
+      <audio autoplay>
+        <source src="{{ url_for('audio') }}" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      {% endif %}
+    </div>
+  </body>
+</html>
